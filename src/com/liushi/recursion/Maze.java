@@ -15,6 +15,8 @@ public class Maze {
     // 创建一个二维数组,模拟迷宫地图
     public static int[][] map = new int[length][width];
 
+    public static int count = 0;
+
     public static void main(String[] args) {
         // 把创建地图封装为一个方法
         createMap();
