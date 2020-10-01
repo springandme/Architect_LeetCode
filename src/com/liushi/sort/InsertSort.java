@@ -47,7 +47,7 @@ public class InsertSort {
 
         Instant end = Instant.now();
         // 输出为ISO 8601持续时间格式 ： PT1M7.039S （1分7.039秒）。
-        System.out.println("排序所消耗的时间为: " + Duration.between(start, end));
+        System.out.println("简单插入排序所消耗的时间为: " + Duration.between(start, end));
     }
 
     /**

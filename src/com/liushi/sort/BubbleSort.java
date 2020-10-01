@@ -14,15 +14,16 @@ public class BubbleSort {
 
     /**
      * 性能测试结果 cpu i7-8700 16G内存 8W条数据,
-     * 使用临时变量测试 int temp = 0; 排序所消费的时间为 7.043秒
+     * 使用临时变量测试 int temp = 0; 排序所消费的时间为 9.533秒
      * 不是用临时变量, 用 arr[i] = arr[i]^arr[i+1]; 排序所消费的时间为 10.616秒
      *
      * @param args
      */
     public static void main(String[] args) {
         // int[] arr = {3, 9, -1, 10, -2, 14, 0};
-        // int[] arr = {3, 8, 7, 10, 11, 14, 16};
-        // System.out.println("没有排序的数组");
+        // int[] arr2 = {3, 8, 7, 10, 11, 14, 16};
+        // sort(arr);
+        // System.out.println("排序后的数组");
         // System.out.println(Arrays.toString(arr));
 
         Instant before = Instant.now();
@@ -44,7 +45,7 @@ public class BubbleSort {
         // System.out.println("排序所消耗的时间为: " + (laterSort - beforeSort));
         Instant end = Instant.now();
         // 输出为ISO 8601持续时间格式 ： PT1M7.039S （1分7.039秒）。
-        System.out.println("排序所消耗的时间为: " + Duration.between(start, end));
+        System.out.println("冒泡排序所消耗的时间为: " + Duration.between(start, end));
     }
 
     /**
@@ -66,9 +67,9 @@ public class BubbleSort {
                     // arr[j] = arr[j + 1] ^ arr[j];
                     // arr[j + 1] = arr[j + 1] ^ arr[j];
                     // arr[j] = arr[j + 1] ^ arr[j];
-                    temp = arr[i];
-                    arr[i + 1] = temp;
-                    arr[i] = arr[i + 1];
+                    temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
                 }
             }
             // 在一趟排序中,一次交换都没发生过,直接退出外循环,表明数组已经排好序了
