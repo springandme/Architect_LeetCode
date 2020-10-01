@@ -29,7 +29,7 @@ public class BubbleSort {
         // 测试一下冒泡排序的速度O(n^2),给8W个数组,测试性能
         // 创建要给8W个随机的数组
         int[] randomArr = new int[80000];
-        for (int i = 0; i < 80000 - 1; i++) {
+        for (int i = 0; i < 80000; i++) {
             // 生成一个[0,8000000) 数
             randomArr[i] = (int) (Math.random() * 8000000);
         }
@@ -54,7 +54,7 @@ public class BubbleSort {
      */
     public static void sort(int[] arr) {
         // 交换的临时变量
-        // int temp = 0;
+        int temp = 0;
         // 标识变量,标识是否进行过交换
         boolean flag = false;
         for (int i = 0; i < arr.length - 1; i++) {
@@ -63,12 +63,12 @@ public class BubbleSort {
                 if (arr[j] > arr[j + 1]) {
                     // 进行了交换,就把这个标记变量设置为true
                     flag = true;
-                    arr[j] = arr[j + 1] ^ arr[j];
-                    arr[j + 1] = arr[j + 1] ^ arr[j];
-                    arr[j] = arr[j + 1] ^ arr[j];
-                    // temp = arr[i];
-                    // arr[i + 1] = temp;
-                    // arr[i] = arr[i + 1];
+                    // arr[j] = arr[j + 1] ^ arr[j];
+                    // arr[j + 1] = arr[j + 1] ^ arr[j];
+                    // arr[j] = arr[j + 1] ^ arr[j];
+                    temp = arr[i];
+                    arr[i + 1] = temp;
+                    arr[i] = arr[i + 1];
                 }
             }
             // 在一趟排序中,一次交换都没发生过,直接退出外循环,表明数组已经排好序了

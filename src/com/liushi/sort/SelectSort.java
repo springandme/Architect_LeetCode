@@ -29,7 +29,7 @@ public class SelectSort {
         System.out.println(Arrays.toString(arr));
         */
         Instant before = Instant.now();
-        // 测试一下冒泡排序的速度O(n^2),给8W个数组,测试性能
+        // 测试一下选择排序的速度O(n^2),给8W个数组,测试性能
         // 创建要给8W个随机的数组
         int[] randomArr = new int[80000];
         for (int i = 0; i < 80000 - 1; i++) {
