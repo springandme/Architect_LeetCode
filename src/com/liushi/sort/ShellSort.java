@@ -33,7 +33,7 @@ public class ShellSort {
         // 测试一下插入排序的速度O(n^2),给8W个数组,测试性能
         // 创建要给8W个随机的数组
         int[] randomArr = new int[80000];
-        for (int i = 0; i < 80000 - 1; i++) {
+        for (int i = 0; i < 80000; i++) {
             // 生成一个[0,8000000) 数
             randomArr[i] = (int) (Math.random() * 8000000);
         }
@@ -111,7 +111,6 @@ public class ShellSort {
         }
         System.out.println("第一轮排序后");
         System.out.println(Arrays.toString(arr)); // [3, 5, 1, 6, 0, 8, 9, 4, 7, 2]
-
         // 希尔排序的第二轮排序
         // 因为第二轮排序,是将10个数组分成5/2 =2 组
         for (int i = 5 / 2; i < arr.length; i++) {
