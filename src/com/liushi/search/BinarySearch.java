@@ -69,7 +69,7 @@ public class BinarySearch {
         int left = 0;
         int right = arr.length - 1;
         int mid = 0;
-        while (left < right) {
+        while (left <= right) {
             mid = (left + right) / 2;
             if (findVal > arr[mid]) {
                 left = mid + 1;
