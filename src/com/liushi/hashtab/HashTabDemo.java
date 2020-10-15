@@ -21,6 +21,7 @@ public class HashTabDemo {
         while (true) {
             System.out.println("add:  添加雇员");
             System.out.println("list: 显示雇员");
+            System.out.println("find: 查找雇员");
             System.out.println("exit: 退出系统");
 
             key = scanner.next();
@@ -37,6 +38,11 @@ public class HashTabDemo {
                     break;
                 case "list":
                     hashTab.list();
+                    break;
+                case "find":
+                    System.out.println("请输入要查找的id");
+                    id = scanner.nextInt();
+                    hashTab.findEmpById(id);
                     break;
                 case "exit":
                     scanner.close();
@@ -103,6 +109,22 @@ class HashTab {
         }
     }
 
+    /**
+     * 根据输入的id,查找雇员
+     *
+     * @param id 输入的id
+     */
+    public void findEmpById(int id) {
+        // 使用散列函数确认到哪条链表查询
+        int empLinkedListNO = hashFun(id);
+        Emp emp = empLinkedListArray[empLinkedListNO].findEmpById(id);
+        if (emp != null) {
+            System.out.printf("在第%d条链表中找到雇员id = %d!\n", empLinkedListNO + 1, id);
+        } else {
+            System.out.println("在哈希表中,没有找到该雇员!");
+        }
+    }
+
     // 编写一个散列函数,使用取模法
     public int hashFun(int id) {
         return id % size;
@@ -157,7 +179,7 @@ class EmpLinkedList {
         // 辅助指针
         Emp curEmp = head;
         while (true) {
-            System.out.printf("=> id=%s name=%s\t", curEmp.id, curEmp.name);
+            System.out.printf("=> id=%d name=%s\t", curEmp.id, curEmp.name);
             // 说明curEmp已经是最后节点
             if (curEmp.next == null) {
                 break;
@@ -176,6 +198,7 @@ class EmpLinkedList {
         // 判断链表是否为空
         if (head == null) {
             System.out.println("链表为空");
+            return null;
         }
         // 辅助指针
         Emp curEmp = head;
@@ -187,6 +210,8 @@ class EmpLinkedList {
             // 退出,说明遍历当前链表没有找到该雇员
             if (curEmp.next == null) {
                 curEmp = null;
+                // bug 点在这
+                break;
             }
             curEmp = curEmp.next;
         }
