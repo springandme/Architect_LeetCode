@@ -55,7 +55,9 @@ class ArrBinaryTree {
             return;
         }
         // 输出当前这个元素
-        System.out.print(arr[index] + " ");
+        if (arr[index] != null) {
+            System.out.print(arr[index] + " ");
+        }
 
         // 向左递归遍历
         if ((index * 2 + 1) < arr.length) {
@@ -84,7 +86,9 @@ class ArrBinaryTree {
             infixOrder(index * 2 + 1);
         }
         // 输出当前这个元素
-        System.out.print(arr[index] + " ");
+        if (arr[index] != null) {
+            System.out.print(arr[index] + " ");
+        }
         // 向右递归遍历
         if ((index * 2 + 2) < arr.length) {
             infixOrder(index * 2 + 2);
@@ -112,6 +116,8 @@ class ArrBinaryTree {
             postOrder(index * 2 + 2);
         }
         // 输出当前这个元素
-        System.out.print(arr[index] + " ");
+        if (arr[index] != null) {
+            System.out.print(arr[index] + " ");
+        }
     }
 }
