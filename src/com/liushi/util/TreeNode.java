@@ -125,6 +125,141 @@ public class TreeNode implements Comparable<TreeNode> {
         }
     }
 
+    /**
+     * 删除结点
+     *
+     * @param val
+     */
+    public void delNode(int val) {
+        TreeNode root = this.getRoot();
+        if (getRoot() == null) {
+            return;
+        } else {
+            // 1.需要先找到需要删除的节点 targetNode
+            TreeNode targetNode = search(val);
+            // 如果没有找到要删除的结点
+            if (targetNode == null) {
+                return;
+            }
+            // 如果我们发现当前这颗二叉排序树只有一个结点
+            if (root.left == null && root.right == null) {
+                root = null;
+                return;
+            }
+            // 去找targetNode的父结点
+            TreeNode parent = searchParent(val);
+
+            // 第一种情况：如果要删除的结点是叶子结点
+            if (targetNode.right == null && targetNode.left == null) {
+                // 判断targetNode是父结点的左子结点，还是右子结点
+                // 说明是左子结点
+                if (parent.left != null && parent.left.val == targetNode.val) {
+                    parent.left = null;
+                    // 说明是右子结点
+                } else if (parent.right != null && parent.right.val == targetNode.val) {
+                    parent.right = null;
+                }
+                // 第三种情况：删除的结点是有两颗子树的结点
+            } else if (targetNode.left != null && targetNode.right != null) {
+                // 思路1:从target的右子树找到最小值
+//                int minVal = delRightTreeMin(targetNode);
+//                targetNode.val = minVal;
+                // 思路2:从target的左子树找到最大值
+                int maxVal = delLeftTreeMax(targetNode);
+                targetNode.val = maxVal;
+
+                // 剩余下面的判断条件就是 就是第二种情况：
+                // 如果删除的结点只有一颗子树的结点
+            } else {
+                // 如果要删除的targetNode结点有左结点
+                if (targetNode.left != null) {
+                    // 如果targetNode是parent的左子结点
+                    if (targetNode.val == parent.left.val) {
+                        parent.left = targetNode.left;
+                    } else {  // 如果targetNode是parent的右子结点
+                        parent.right = targetNode.left;
+                    }
+                } else { // 如果删除的targetNode结点有右结点
+                    // 如果targetNode是parent的左子结点
+                    if (targetNode.val == parent.left.val) {
+                        parent.left = targetNode.right;
+                    } else { // 如果targetNode是parent的右子结点
+                        parent.right = targetNode.right;
+                    }
+                }
+            }
+
+            // 自己的写法
+            // 第二种情况，如果删除的结点只有一颗子树的结点
+            // targetNode是parent的左子树
+            /*if (parent.left != null && parent.left.val == targetNode.val) {
+                // 说明是左子结点
+                if (targetNode.left != null && targetNode.right == null) {
+                    parent.left = targetNode.left;
+                } else if (targetNode.right != null && targetNode.left == null) {
+                    parent.left = targetNode.right;
+                }
+                // targetNode是parent的右子树
+            } else if (parent.right != null && parent.right.val == targetNode.val) {
+                // 说明是右子结点
+                if (targetNode.left != null && targetNode.right == null) {
+                    parent.right = targetNode.left;
+                } else if (targetNode.right != null && targetNode.left == null) {
+                    parent.right = targetNode.right;
+                }
+            }*/
+        }
+    }
+
+    /**
+     * 思路：从target的右子树找到最小值
+     * 1.返回的以node为根结点的二叉排序树的最小结点的值
+     * 2.删除node为根结点的二叉排序树的最小结点
+     *
+     * @param node 传入的结点（当做二叉排序树的根节点）
+     * @return 返回的以node为根结点的二叉排序树的最小结点的值
+     */
+    public int delRightTreeMin(TreeNode node) {
+        TreeNode target = node.right;
+
+        // 循环的查找左子结点，就会找到最小值，直到结点为空
+        while (target.left != null) {
+            target = target.left;
+        }
+        // 循环结束后，这时候target就只指向最小结点，而且这个结点还是一个叶子结点
+        // 删除这个最小结点[它是一个叶子结点，可以直接删除]
+        delNode(target.val);
+        // 返回最小结点的值
+        return target.val;
+    }
+
+    /**
+     * 思路：从target的左子树找到最大值
+     * 1.返回的以node为根结点的二叉排序树的最大结点的值
+     * 2.删除node为根结点的二叉排序树的最大结点
+     *
+     * @param node 传入的结点（当做二叉排序树的根节点）
+     * @return 返回的以node为根结点的二叉排序树的最大结点的值
+     */
+    public int delLeftTreeMax(TreeNode node) {
+        TreeNode target = node.left;
+
+        // 循环的查找右子结点，就会找到最大值，直到结点为空
+        while (target.right != null) {
+            target = target.right;
+        }
+        // 循环结束后，这时候target就指向最大结点，而且这个结点还是一个叶子结点
+        // 删除这个最大结点[它是一个叶子结点，可以直接删除]
+        delNode(target.val);
+        // 返回最大结点的值
+        return target.val;
+    }
+
+    public TreeNode getRoot() {
+        return this;
+    }
+
+
     @Override
     public int compareTo(TreeNode o) {
         // 表示从小到大排序
