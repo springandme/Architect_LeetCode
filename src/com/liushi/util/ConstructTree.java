@@ -12,6 +12,8 @@ import java.util.Queue;
  **/
 public class ConstructTree {
 
+    // public static TreeNode root;
+
     /**
      * 核心思想是在每一层,用一个队列queue来存储该层的所有节点,
      * 然后用父结点的数量的两倍遍历输入的数组(从上一层结束的地方开始)
@@ -64,6 +66,31 @@ public class ConstructTree {
             lineNodeNum = queue.size() * 2;
         }
 
+        return root;
+    }
+
+    /**
+     * 根据数组创建一个二叉排序树
+     *
+     * @param arr 一个数组
+     * @return 已经排好序二叉排序树
+     */
+    public static TreeNode createBinarySortTree(Integer[] arr) {
+        int index = 0;
+        TreeNode root = null;
+        // 这个循环找到数组中第一个不为null的元素
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] != null) {
+                root = new TreeNode(arr[i]);
+                index = i;
+                break;
+            }
+        }
+        for (int i = index + 1; i < arr.length; i++) {
+            if (arr[i] != null) {
+                root.addNode(new TreeNode(arr[i]));
+            }
+        }
         return root;
     }
 
