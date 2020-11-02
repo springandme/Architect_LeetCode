@@ -16,15 +16,26 @@ public class BinarySortTreeDemo {
     public static void main(String[] args) {
         Integer[] integers = {5, 4, 8, 11, null, 13, 4, 7, 2, null, null, null, 1};
         Integer[] integers2 = {7, 3, 10, 12, 5, 1, 9, 2};
+        Integer[] integers3 = {7, 3};
         TreeNode root = ConstructTree.createBinarySortTree(integers2);
+        TreeNode root2 = ConstructTree.createBinarySortTree(integers3);
+        BinarySortTree binarySortTree = new BinarySortTree();
+        binarySortTree.createBinarySortTree(integers3);
+        System.out.println("---中序遍历---");
+        binarySortTree.infixOrder();
+        binarySortTree.delNode(7);
+        System.out.println("");
+        binarySortTree.infixOrder();
 
+
+        System.out.println("------------------------------------------------");
         TreeOperation.show(root);
         System.out.println();
         root.infixOrderTraverse();
-        // root.delNode(1);
-        // root.delNode(5);
-        // root.delNode(9);
-        // root.delNode(12);
+        root.delNode(1);
+        root.delNode(5);
+        root.delNode(9);
+        root.delNode(12);
         // System.out.println("\n删除1,5,9,12,这些有一颗子树的结点后的二叉排序树");
 
         root.delNode(3);
@@ -32,13 +43,45 @@ public class BinarySortTreeDemo {
         System.out.println("\n删除3,10,这些有两颗子树的结点后的二叉排序树");
         TreeOperation.show(root);
         root.infixOrderTraverse();
+        System.out.println("------------------------------");
 
 
+  /*      TreeOperation.show(root2);
+
+        root2.delNode(7);
+        root2.infixOrderTraverse();
+        System.out.println("\n删除结点7后------------------------------");
+        TreeOperation.show(root2);
+
+        root2.delNode(3);
+        root2.infixOrderTraverse();
+        System.out.println("\n删除结点3后------------------------------");
+        TreeOperation.show(root2);
+*/
     }
 }
 
 class BinarySortTree {
     private Node root;
+
+    public void createBinarySortTree(Integer[] arr) {
+        int index = 0;
+
+        // 这个循环找到数组中第一个不为null的元素
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] != null) {
+                root = new Node(arr[i]);
+                index = i;
+                break;
+            }
+        }
+        for (int i = index + 1; i < arr.length; i++) {
+            if (arr[i] != null) {
+                root.addNode(new Node(arr[i]));
+            }
+        }
+    }
+
 
     /**
      * 添加结点方法
@@ -100,6 +143,7 @@ class BinarySortTree {
      */
     public void delNode(int val) {
         if (root == null) {
+            System.out.println("二叉排序树已经为空,不能删除结点!");
             return;
         } else {
             // 1.需要先找到需要删除的节点 targetNode
@@ -140,18 +184,26 @@ class BinarySortTree {
             } else {
                 // 如果要删除的targetNode结点有左结点
                 if (targetNode.left != null) {
-                    // 如果targetNode是parent的左子结点
-                    if (targetNode.val == parent.left.val) {
-                        parent.left = targetNode.left;
-                    } else {  // 如果targetNode是parent的右子结点
-                        parent.right = targetNode.left;
+                    if (parent != null) {
+                        // 如果targetNode是parent的左子结点
+                        if (targetNode.val == parent.left.val) {
+                            parent.left = targetNode.left;
+                        } else {  // 如果targetNode是parent的右子结点
+                            parent.right = targetNode.left;
+                        }
+                    } else {
+                        root = targetNode.left;
                     }
                 } else { // 如果删除的targetNode结点有右结点
-                    // 如果targetNode是parent的左子结点
-                    if (targetNode.val == parent.left.val) {
-                        parent.left = targetNode.right;
-                    } else { // 如果targetNode是parent的右子结点
-                        parent.right = targetNode.right;
+                    if (parent != null) {
+                        // 如果targetNode是parent的左子结点
+                        if (targetNode.val == parent.left.val) {
+                            parent.left = targetNode.right;
+                        } else { // 如果targetNode是parent的右子结点
+                            parent.right = targetNode.right;
+                        }
+                    } else {
+                        root = targetNode.right;
                     }
                 }
             }
@@ -200,6 +252,14 @@ class BinarySortTree {
         delNode(target.val);
         // 返回最大结点的值
         return target.val;
+    }
+
+    public Node getRoot() {
+        return root;
+    }
+
+    public void setRoot(Node root) {
+        this.root = root;
     }
 }
 

@@ -133,6 +133,7 @@ public class TreeNode implements Comparable<TreeNode> {
     public void delNode(int val) {
         TreeNode root = this.getRoot();
         if (getRoot() == null) {
+            System.out.println("二叉排序树已经为空,不能删除结点!");
             return;
         } else {
             // 1.需要先找到需要删除的节点 targetNode
@@ -143,7 +144,8 @@ public class TreeNode implements Comparable<TreeNode> {
             }
             // 如果我们发现当前这颗二叉排序树只有一个结点
             if (root.left == null && root.right == null) {
-                root = null;
+                // 这里无法将本身置空!!!
+                root.val = -1;
                 return;
             }
             // 去找targetNode的父结点
@@ -173,18 +175,27 @@ public class TreeNode implements Comparable<TreeNode> {
             } else {
                 // 如果要删除的targetNode结点有左结点
                 if (targetNode.left != null) {
-                    // 如果targetNode是parent的左子结点
-                    if (targetNode.val == parent.left.val) {
-                        parent.left = targetNode.left;
-                    } else {  // 如果targetNode是parent的右子结点
-                        parent.right = targetNode.left;
+                    if (parent != null) {
+                        // 如果targetNode是parent的左子结点
+                        if (targetNode.val == parent.left.val) {
+                            parent.left = targetNode.left;
+                        } else {  // 如果targetNode是parent的右子结点
+                            parent.right = targetNode.left;
+                        }
+                    } else {
+                        this.setRoot(targetNode.left);
                     }
-                } else { // 如果删除的targetNode结点有右结点
-                    // 如果targetNode是parent的左子结点
-                    if (targetNode.val == parent.left.val) {
-                        parent.left = targetNode.right;
-                    } else { // 如果targetNode是parent的右子结点
-                        parent.right = targetNode.right;
+                    // 如果删除的targetNode结点有右结点
+                } else {
+                    if (parent != null) {
+                        // 如果targetNode是parent的左子结点
+                        if (targetNode.val == parent.left.val) {
+                            parent.left = targetNode.right;
+                        } else { // 如果targetNode是parent的右子结点
+                            parent.right = targetNode.right;
+                        }
+                    } else {
+                        this.setRoot(targetNode.right);
                     }
                 }
             }
@@ -257,6 +268,12 @@ public class TreeNode implements Comparable<TreeNode> {
 
     public TreeNode getRoot() {
         return this;
+    }
+
+    public void setRoot(TreeNode node) {
+        this.val = node.val;
+        this.left = node.left;
+        this.right = node.right;
     }
 
 
